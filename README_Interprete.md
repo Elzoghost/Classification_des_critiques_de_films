@@ -1,19 +1,30 @@
-Classification binaire de critiques de films avec Keras
-Ce projet implémente un modèle de réseau neuronal pour effectuer une classification binaire des critiques de films en utilisant le jeu de données IMDb avec Keras. Le modèle utilise un réseau de neurones récurrent (LSTM) pour l'analyse de texte.
+Interprétation du Code - Classification binaire de critiques de films avec Keras
+Ce projet utilise un modèle de réseau neuronal pour effectuer une classification binaire (positive/négative) des critiques de films en utilisant le jeu de données IMDb. Le code est basé sur Keras, une bibliothèque d'apprentissage en profondeur.
 
-Résultats
-Après avoir entraîné le modèle sur le jeu de données IMDb, nous avons obtenu les résultats suivants :
+Étape par Étape
+Chargement des Données
+Le code commence par charger le jeu de données IMDb. Ce jeu de données contient des critiques de films prétraitées, où chaque critique est représentée par une séquence de mots encodés.
 
-Perte (Loss) sur l'ensemble de test : 0.57
-Précision (Accuracy) sur l'ensemble de test : 0.70
-Interprétation des résultats
-La perte (Loss) est une mesure de l'erreur du modèle pendant l'entraînement. Une valeur de perte plus basse indique une meilleure performance du modèle. Vous pouvez comparer cette valeur à travers différentes exécutions ou modèles pour évaluer leur performance relative.
+Création du Modèle
+Un modèle de réseau neuronal est créé. Il comprend une couche d'incorporation (Embedding) pour représenter les mots, une couche LSTM pour l'analyse de séquence, et une couche de sortie avec une activation sigmoid pour la classification binaire.
 
-La précision (Accuracy) est la proportion de critiques de films correctement classées par le modèle sur l'ensemble de test. Une précision plus élevée indique que le modèle est meilleur pour discriminer les critiques positives des critiques négatives.
+Compilation du Modèle
+Le modèle est compilé avec une fonction de perte binaire_crossentropy, l'optimiseur Adam et la métrique accuracy pour mesurer la précision du modèle.
 
-Prédiction sur de nouvelles données
-Nous avons également testé le modèle en lui fournissant une nouvelle critique de film :
+Utilisation de Callbacks
+Trois callbacks sont utilisés pour améliorer l'entraînement :
 
-Nouvelle critique : "This movie was great! I loved it."
-Résultat de la prédiction : Critique positive
-La prédiction sur de nouvelles données est un indicateur de la capacité du modèle à généraliser et à faire des prédictions sur des données qu'il n'a jamais vues auparavant.
+EarlyStopping arrête l'entraînement si la perte sur l'ensemble de validation ne s'améliore pas.
+ModelCheckpoint sauvegarde le meilleur modèle basé sur la perte de validation.
+ReduceLROnPlateau réduit le taux d'apprentissage si la performance stagne.
+Entraînement du Modèle
+Le modèle est entraîné sur l'ensemble d'entraînement en utilisant un batch size de 64 et 10 époques. Les callbacks sont utilisés pour éviter le surapprentissage.
+
+Évaluation du Modèle
+Le modèle est évalué sur l'ensemble de test pour mesurer la perte, la précision et le F1-score (qui prend en compte la précision et le rappel). Une matrice de confusion et un rapport de classification sont également générés pour une évaluation détaillée.
+
+Tracer les Graphes
+Le code génère des graphes montrant l'évolution de la perte et de la précision pendant l'entraînement. Ces graphes permettent de visualiser comment le modèle s'améliore au fil des époques.
+
+Conclusion
+Ce code fournit une solution complète pour la classification binaire de critiques de films. Il peut être utilisé comme point de départ pour d'autres projets de traitement de texte et d'analyse de sentiment.
