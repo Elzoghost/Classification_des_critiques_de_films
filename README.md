@@ -1,28 +1,30 @@
-# Classification_des_critiques_de_films
 Classification binaire de critiques de films avec Keras
 Ce projet implémente un modèle de réseau neuronal pour effectuer une classification binaire des critiques de films en utilisant le jeu de données IMDb avec Keras. Le modèle utilise un réseau de neurones récurrent (LSTM) pour l'analyse de texte.
 
-Étapes du code
-Étape 1 : Chargement des données
-Nous commençons par charger les données du jeu de données IMDb à l'aide de Keras. Le jeu de données IMDb contient des critiques de films étiquetées comme positives (1) ou négatives (0).
+Détails du Code
+1. Chargement des données
+Les données sont chargées à partir du jeu de données IMDb en utilisant la bibliothèque Keras. Les critiques de films sont encodées en séquences de nombres, et les étiquettes correspondent à des critiques positives (1) ou négatives (0).
 
-Étape 2 : Prétraitement des données
-Nous effectuons le prétraitement des données en limitant le nombre de mots du vocabulaire et la longueur des séquences. Nous utilisons également la fonction pad_sequences de Keras pour ajuster la longueur des séquences.
+2. Création du Modèle
+Le modèle de réseau neuronal est créé à l'aide de Keras Sequential API. Il se compose des couches suivantes :
 
-Étape 3 : Création du modèle
-Nous créons un modèle de réseau neuronal séquentiel avec une couche d'incorporation (Embedding), une couche LSTM et une couche de sortie avec une activation sigmoid. Cette architecture est couramment utilisée pour l'analyse de texte.
+Une couche d'incorporation (Embedding) pour convertir les mots en vecteurs.
+Une couche LSTM avec 128 unités pour l'analyse de séquence.
+Une couche de sortie avec une activation sigmoid pour la classification binaire.
+3. Compilation du Modèle
+Le modèle est compilé avec une fonction de perte binaire_crossentropy, un optimiseur Adam et la métrique de précision (accuracy) pour évaluer la performance.
 
-Étape 4 : Compilation du modèle
-Nous compilons le modèle en spécifiant une fonction de perte (binary_crossentropy) et un optimiseur (Adam) pour l'entraînement. Nous utilisons également la métrique de précision (accuracy) pour évaluer la performance du modèle.
+4. Utilisation de Callbacks
+Trois callbacks sont utilisés pour améliorer l'entraînement du modèle :
 
-Étape 5 : Entraînement du modèle
-Nous entraînons le modèle sur l'ensemble d'entraînement en spécifiant le nombre d'époques et la taille de lot (batch_size). Les données sont divisées en ensembles d'entraînement et de validation pour surveiller l'apprentissage du modèle.
+EarlyStopping : Arrête l'entraînement prématurément si la perte sur l'ensemble de validation ne s'améliore pas pendant un certain nombre d'époques.
+ModelCheckpoint : Sauvegarde le meilleur modèle basé sur la perte sur l'ensemble de validation.
+ReduceLROnPlateau : Réduit le taux d'apprentissage si la performance stagne.
+5. Entraînement du Modèle
+Le modèle est entraîné sur l'ensemble d'entraînement avec un batch size de 64 pendant 10 époques. Les callbacks sont utilisés pour améliorer la performance et éviter le surapprentissage.
 
-Étape 6 : Évaluation du modèle
-Nous évaluons la performance du modèle sur l'ensemble de test en calculant la perte (loss) et la précision (accuracy).
+6. Évaluation du Modèle
+Le modèle est évalué sur l'ensemble de test pour calculer la perte (loss), la précision (accuracy) et le F1-score. La matrice de confusion et le rapport de classification sont également générés pour évaluer la performance du modèle de manière plus détaillée.
 
-Étape 7 : Prédiction sur de nouvelles données
-Nous effectuons une prédiction sur une nouvelle critique de film pour déterminer si elle est positive ou négative en utilisant le modèle entraîné.
-
-Étape 8 : Tracer les graphes de la perte et de la précision
-Nous utilisons la bibliothèque matplotlib pour tracer les graphes de la perte et de la précision au fil de l'entraînement. Ces graphes permettent de visualiser l'évolution de la performance du modèle.
+7. Tracer les Graphes
+Des graphes de la perte et de la précision au fil de l'entraînement sont tracés à l'aide de la bibliothèque matplotlib pour visualiser l'évolution de la performance du modèle.
